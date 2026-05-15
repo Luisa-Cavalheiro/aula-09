@@ -15,6 +15,16 @@ describe('Classe do Serviço de Pagamento', () => {
             assert.equal(ultimoPagamento.valor, 100000.00); 
         });
 
+       it('Validar que pagamento com valor menor ou igual a zero retorna erro', () => {
+            const servicoDePagamento = new ServicoDePagamento();
+
+            assert.throws(() => {
+                servicoDePagamento.fazerPagamento('1111-2222-3333', 'Golpista', -100000.00);
+            }, {
+                    message: 'Valor do pagamento deve ser maior que zero'
+                });
+        });
+
         it('Validar que pagamento com valor até 100.00 recebe categoria padrão', () => {
             const servicoDePagamento = new ServicoDePagamento();
 

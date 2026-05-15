@@ -6,7 +6,9 @@ export class ServicoDePagamento {
     }
 
     fazerPagamento(cod, destino, valorPago) {
-        if (valorPago > 100){
+        if(valorPago <= 0){
+            throw new Error('Valor do pagamento deve ser maior que zero');
+        }else if (valorPago > 100){
             this.#pagamentos.push({
             codigoBarras: cod,
             empresa: destino,
