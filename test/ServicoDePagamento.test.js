@@ -14,6 +14,30 @@ describe('Classe do Serviço de Pagamento', () => {
             assert.equal(ultimoPagamento.empresa, 'Gerdau');
             assert.equal(ultimoPagamento.valor, 100000.00); 
         });
+
+        it('Validar que pagamento com valor até 100.00 recebe categoria padrão', () => {
+            const servicoDePagamento = new ServicoDePagamento();
+
+            servicoDePagamento.fazerPagamento('9784-0000-7654', 'Empresa X', 100.00)
+            const ultimoPagamento = servicoDePagamento.consultarUltimoPagamento();
+            
+            assert.equal(ultimoPagamento.codigoBarras, '9784-0000-7654');
+            assert.equal(ultimoPagamento.empresa, 'Empresa X');
+            assert.equal(ultimoPagamento.valor, 100.00); 
+            assert.equal(ultimoPagamento.categoria, 'padrão');
+        });
+
+        it('Validar que pagamento com valor maior que 100.00 recebe categoria cara', () => {
+            const servicoDePagamento = new ServicoDePagamento();
+
+            servicoDePagamento.fazerPagamento('9999-0000-7654', 'Empresa Y', 101.00)
+            const ultimoPagamento = servicoDePagamento.consultarUltimoPagamento();
+            
+            assert.equal(ultimoPagamento.codigoBarras, '9999-0000-7654');
+            assert.equal(ultimoPagamento.empresa, 'Empresa Y');
+            assert.equal(ultimoPagamento.valor, 101.00); 
+            assert.equal(ultimoPagamento.categoria, 'cara');
+        });
     });
 
     describe('Testes de consultarUltimoPagamento', () => {  
